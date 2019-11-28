@@ -18,16 +18,13 @@ class DTCommand(DTCommandAbs):
     def command(shell, args):
         # dts base [duckiebot name] [python script]
 
-        # ips van de duckiebots
-        # greta_ip = '172.16.104.65'
-
         # params
-        bot = args[0]
+        hostname = args[0]
         path = args[1]
 
         if os.path.exists(path):
             print("File" + path +"exist")
-        hostname = bot
+
         image = 'pxlmicromobility/duckiebot-base:latest'
         duckiebot_ip = get_duckiebot_ip(duckiebot_name= hostname)
         network_mode = 'host'
