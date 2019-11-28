@@ -6,6 +6,9 @@ Commands for the Duckietown Shell
 
 Usage custom commands:
 
-- dts keyboard 'duckiename': launch keyboard teleop
-- dts base 'duckiename' 'python script path': launch base container with python script
-- dts shutdown 'duckiename': shutdown base container
+- dts keyboard 'duckiename'
+	-> launch keyboard teleop
+- dts base 'duckiename' 'python script path' 
+	-> launch base container with python script
+- dts shutdown 'duckiename'
+	-> shutdown base container
