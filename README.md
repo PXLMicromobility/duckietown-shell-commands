@@ -12,3 +12,5 @@ Usage custom commands:
 	-> launch base container with python script
 - dts shutdown 'duckiename'
 	-> shutdown base container
+- dts start_logging 'duckiename'
+	-> init logging script & container
