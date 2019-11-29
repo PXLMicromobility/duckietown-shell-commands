@@ -16,14 +16,10 @@ class DTCommand(DTCommandAbs):
 
     @staticmethod
     def command(shell, args):
-        # dts base [duckiebot name] [python script]
+        # dts stop_logging [duckiebot name]
 
         # params
         hostname = args[0]
-        path = args[1]
-
-        if os.path.exists(path):
-            print("File" + path +"exist")
 
         image = 'pxlmicromobility/duckiebot-base:latest'
         duckiebot_ip = get_duckiebot_ip(duckiebot_name= hostname)
@@ -33,13 +29,13 @@ class DTCommand(DTCommandAbs):
         if sim:
             duckiebot_ip = "sim"
 
-        run_gui_controller(hostname, image, network_mode, path, duckiebot_ip)
+        run_gui_controller(hostname, image, network_mode, duckiebot_ip)
 
 
-def run_gui_controller(hostname, image, network_mode, path, duckiebot_ip):
+def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
     client = check_docker_environment()
-    container_name = "duckie_base_%s" % hostname
-    remove_if_running(client, container_name)
+    container_name = "duckie_copier_%s" % hostname
+    remove_if_running(client, container_name2)
 
     env = {'HOSTNAME': hostname,
            'ROS_MASTER': hostname,
@@ -57,10 +53,8 @@ def run_gui_controller(hostname, image, network_mode, path, duckiebot_ip):
     # cmd = "python misc/code/{path}.py %s" % hostname
 
     # subprocess.call(['./helper.sh'])
-    if path == "virtualJoy":
-        cmd = "python misc/virtualJoy/virtualJoy.py %s" % hostname
-    else:
-        cmd = "python misc/code/%s.py" % os.path.basename(path)
+    cmd = "python misc/code/logging/copy_logs.py %s" % get_ip()
+    
 
     params = {'image': image,
               'name': container_name,
@@ -78,6 +72,17 @@ def run_gui_controller(hostname, image, network_mode, path, duckiebot_ip):
     cmd = 'docker attach %s' % container_name
     start_command_in_subprocess(cmd)
 
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
 
 
 
