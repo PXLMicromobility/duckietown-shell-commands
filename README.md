@@ -14,3 +14,5 @@ Usage custom commands:
 	-> shutdown base container
 - dts start_logging 'duckiename'
 	-> init logging script & container
+- dts stop_logging 'duckiename'
+	-> stop logging script & zipping log files
