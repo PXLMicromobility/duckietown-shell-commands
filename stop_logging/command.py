@@ -16,7 +16,7 @@ class DTCommand(DTCommandAbs):
 
     @staticmethod
     def command(shell, args):
-        # dts start_logging [duckiebot name]
+        # dts stop_logging [duckiebot name]
 
         # params
         hostname = args[0]
@@ -37,8 +37,12 @@ class DTCommand(DTCommandAbs):
 
 def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
     client = check_docker_environment()
-    container_name = "duckie_logger_%s" % hostname
+
+    container_name = "duckie_zipper_%s" % hostname
     remove_if_running(client, container_name)
+
+    container_name2 = "duckie_logger_%s" % hostname
+    remove_if_running(client, container_name2)
 
     env = {'HOSTNAME': hostname,
            'ROS_MASTER': hostname,
@@ -56,7 +60,7 @@ def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
     # cmd = "python misc/code/{path}.py %s" % hostname
 
     # subprocess.call(['./helper.sh'])
-    cmd = "python misc/code/logging/logger.py %s" % hostname
+    cmd = "python misc/code/logging/zip_logs.py %s" % hostname
     
 
     params = {'image': image,
