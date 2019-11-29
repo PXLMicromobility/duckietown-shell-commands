@@ -51,7 +51,7 @@ def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
 
     env['QT_X11_NO_MITSHM'] = 1
 
-    volumes = {}
+    volumes = '~/duckiebotlogs:/data'
 
     subprocess.call(["xhost", "+"])
 
@@ -62,7 +62,6 @@ def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
     # subprocess.call(['./helper.sh'])
     cmd = "python misc/code/logging/zip_logs.py %s" % hostname
     
-
     params = {'image': image,
               'name': container_name,
               'network_mode': network_mode,

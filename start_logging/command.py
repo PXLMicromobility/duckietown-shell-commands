@@ -21,9 +21,6 @@ class DTCommand(DTCommandAbs):
         # params
         hostname = args[0]
 
-        if os.path.exists(path):
-            print("File" + path +"exist")
-
         image = 'pxlmicromobility/duckiebot-base:latest'
         duckiebot_ip = get_duckiebot_ip(duckiebot_name= hostname)
         network_mode = 'host'
@@ -47,7 +44,7 @@ def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
 
     env['QT_X11_NO_MITSHM'] = 1
 
-    volumes = {}
+    volumes = ['/home/kobe/duckiebotlogs:/data/logs']
 
     subprocess.call(["xhost", "+"])
 
