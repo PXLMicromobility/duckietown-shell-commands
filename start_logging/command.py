@@ -44,7 +44,7 @@ def run_gui_controller(hostname, image, network_mode, duckiebot_ip):
 
     env['QT_X11_NO_MITSHM'] = 1
 
-    volumes = ['/home/kobe/duckiebotlogs:/data/logs']
+    volumes = [os.getenv("HOME")+ '/duckiebotlogs:/data/logs']
 
     subprocess.call(["xhost", "+"])
 
